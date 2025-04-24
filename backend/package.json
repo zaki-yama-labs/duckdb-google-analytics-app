@@ -1,0 +1,12 @@
+{
+  "name": "ga-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "jose": "^4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.13.0"
+  }
+}
