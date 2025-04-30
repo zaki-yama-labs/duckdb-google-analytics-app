@@ -99,6 +99,13 @@ export default {
 
       const gaUrl = `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`;
       let gaResponse: Response;
+      // Transform incoming request parameters to the GA4 Data API v1beta schema
+      const { startDate, endDate, metrics, dimensions } = requestBody as any;
+      const gaRequestBody = {
+        dateRanges: [{ startDate, endDate }],
+        metrics: Array.isArray(metrics) ? metrics.map((m: any) => ({ name: m })) : [],
+        dimensions: Array.isArray(dimensions) ? dimensions.map((d: any) => ({ name: d })) : [],
+      };
       try {
         gaResponse = await fetch(gaUrl, {
           method: 'POST',
@@ -106,7 +113,7 @@ export default {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(requestBody),
+          body: JSON.stringify(gaRequestBody),
         });
       } catch {
         return new Response(JSON.stringify({ error: 'Failed to fetch GA data' }), {
