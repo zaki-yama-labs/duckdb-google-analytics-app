@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import { mockApi } from './mockApi'
+import { DataTable } from './components/DataTable'
+
+const isDevelopment = import.meta.env.DEV
 
 function App() {
   const [data, setData] = useState<any>(null)
@@ -9,19 +13,24 @@ function App() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/ga', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          startDate: '2025-04-01',
-          endDate: '2025-04-07',
-          metrics: ['activeUsers'],
-          dimensions: []
+      if (isDevelopment) {
+        const mockData = await mockApi.fetchGA4Data()
+        setData(mockData)
+      } else {
+        const res = await fetch('/api/ga', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            startDate: '2024-04-01',
+            endDate: '2024-04-07',
+            metrics: ['activeUsers'],
+            dimensions: ['date']
+          })
         })
-      })
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const json = await res.json()
-      setData(json)
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const json = await res.json()
+        setData(json)
+      }
     } catch (e: any) {
       setError(e.message)
     } finally {
@@ -36,7 +45,7 @@ function App() {
         {loading ? '取得中...' : 'GAデータ取得'}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {data && <pre style={{ marginTop: '1rem', textAlign: 'left' }}>{JSON.stringify(data, null, 2)}</pre>}
+      {data && <DataTable data={data} />}
     </div>
   )
 }
