@@ -13,6 +13,7 @@
 
 import { SignJWT } from 'jose';
 import { importPKCS8 } from 'jose';
+import { handleParquetUrlRequest } from './api/ga/parquet-url'
 
 interface ServiceAccountKey {
   private_key: string;
@@ -126,6 +127,10 @@ export default {
       const headers = new Headers();
       headers.set('Content-Type', 'application/json');
       return new Response(responseText, { status: gaResponse.status, headers });
+    }
+
+    if (url.pathname === '/api/ga/parquet-url') {
+      return await handleParquetUrlRequest(request, env);
     }
 
     if (url.pathname === '/') {
