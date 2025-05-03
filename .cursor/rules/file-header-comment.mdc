@@ -1,0 +1,25 @@
+---
+description: 
+globs: *.ts,*.tsx
+alwaysApply: false
+---
+# 新規ファイル作成時のコメントルール
+
+新たにファイルを作成する際は、必ずファイルの先頭に以下のコメントを記載してください。
+
+- このファイルの概要（何をするファイルか、主な役割や機能）
+- このファイルを再度生成するためのプロンプト（AIや他の開発者が再生成できるように具体的に記述）
+
+例:
+```
+/**
+ * このファイルの概要:
+ * - 〇〇のためのカスタムフック
+ * - 主要な機能や責務を簡潔に記載
+ *
+ * 再生成プロンプト:
+ * 「〇〇のためのカスタムフックを作成してください。主な機能は△△です。」
+ */
+```
+
+このルールは、[frontend/src/hooks/useParquetLoader.ts](mdc:frontend/src/hooks/useParquetLoader.ts) や [frontend/src/components/ParquetLoader.tsx](mdc:frontend/src/components/ParquetLoader.tsx) など、既存の実装例を参考にしています。

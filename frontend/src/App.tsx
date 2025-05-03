@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { mockApi } from './mockApi'
 import { DataTable } from './components/DataTable'
+import { DuckDBProvider } from './contexts/DuckDBContext'
+import { ParquetLoader } from './components/ParquetLoader'
 
 const isDevelopment = import.meta.env.DEV
 
@@ -8,6 +10,7 @@ function App() {
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [loadedTables, setLoadedTables] = useState<string[]>([])
 
   const handleFetch = async () => {
     setLoading(true)
@@ -38,15 +41,33 @@ function App() {
     }
   }
 
+  const handleLoadComplete = (tableName: string) => {
+    setLoadedTables(prev => [...prev, tableName])
+  }
+
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>GA データ取得</h1>
-      <button disabled={loading} onClick={handleFetch}>
-        {loading ? '取得中...' : 'GAデータ取得'}
-      </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {data && <DataTable data={data} />}
-    </div>
+    <DuckDBProvider>
+      <div style={{ padding: '2rem' }}>
+        <h1>GA データ取得</h1>
+        <button disabled={loading} onClick={handleFetch}>
+          {loading ? '取得中...' : 'GAデータ取得'}
+        </button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {data && <DataTable data={data} />}
+        
+        <ParquetLoader onLoadComplete={handleLoadComplete} />
+        {loadedTables.length > 0 && (
+          <div style={{ marginTop: '1rem' }}>
+            <h3>ロード済みテーブル</h3>
+            <ul>
+              {loadedTables.map(table => (
+                <li key={table}>{table}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </DuckDBProvider>
   )
 }
 
