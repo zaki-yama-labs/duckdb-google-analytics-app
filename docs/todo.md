@@ -38,6 +38,14 @@
   - [ ] SQL シンタックスハイライトの設定
   - [ ] クエリ実行ボタンと結果表示の連携
 
+### バッチ処理（自動化）
+- [ ] GAデータ自動取得・R2保存バッチ（Cron Worker）
+  - [ ] Scheduled Event Handlerの実装（Cloudflare Workers Cron Trigger）
+  - [ ] GA4 Data APIから指定日のデータ取得
+  - [ ] jsonl.gzまたはParquetへの変換処理
+  - [ ] R2バケットへのアップロード
+  - [ ] スケジュール設定（wrangler.toml/wrangler.jsonc）
+
 ## フェーズ3: 結果表示 & 可視化
 - [ ] テーブル表示 (TanStack Table)
   - [ ] TanStack Table のインストールと設定

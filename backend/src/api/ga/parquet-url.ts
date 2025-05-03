@@ -52,6 +52,10 @@ export async function handleParquetUrlRequest(request: Request, env: any): Promi
   // ファイル名生成
   const fileName = `ga_data_${startDate}_${endDate}.parquet`;
 
+	// TODO:
+	// - 指定された期間のファイルをR2から取得し、集約して1つのParquetファイルにする
+	// - 集約したParquetファイルをR2にアップロードする
+	// - 集約したParquetファイルの署名付きURLを生成して返却する
 
   // 署名付きURL生成（10分=600秒）
   try {
