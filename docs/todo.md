@@ -5,10 +5,10 @@
 ### バックエンド
 - [x] ~~Wrangler プロジェクトを初期化~~
 - [x] ~~Cloudflare Workers の環境変数設定~~
-- [ ] Google Cloud プロジェクトのセットアップ
-  - [ ] プロジェクト作成
-  - [ ] サービスアカウント設定
-  - [ ] 必要なAPIの有効化（Cloud Functions, Cloud Storage, etc.）
+- [x] Google Cloud プロジェクトのセットアップ
+  - [x] プロジェクト作成
+  - [x] サービスアカウント設定
+  - [x] 必要なAPIの有効化（Cloud Functions, Cloud Storage, etc.）
 - [x] `/api/ga` エンドポイント実装
   - [x] GA4 Data API へのリクエスト (Fetch API)
   - [x] レスポンス(JSON)をそのまま返却
