@@ -6,38 +6,48 @@ An application for analyzing Google Analytics 4 data using DuckDB.
 
 ### 1. Prerequisites
 
-#### Cloudflare R2 Setup
+#### Google Cloud Setup
 
-1. Enable R2 in Cloudflare Dashboard
-   - Log in to Cloudflare Dashboard
-   - Select "R2" from the left sidebar
-   - Click "Enable R2" or "Get started"
-   - Choose a plan (available from Free tier)
+1. Install Google Cloud CLI
+   ```bash
+   # For macOS (using Homebrew)
+   brew install google-cloud-sdk
+   ```
 
-2. Create R2 Buckets
+2. Initialize Google Cloud environment
+   ```bash
+   # Login to Google Cloud
+   gcloud auth login
+
+   # Set project
+   gcloud config set project YOUR_PROJECT_ID
+   ```
+
+3. Enable required APIs
+   ```bash
+   gcloud services enable cloudfunctions.googleapis.com \
+                        cloudscheduler.googleapis.com \
+                        storage.googleapis.com
+   ```
+
+4. Create Cloud Storage bucket
    ```bash
    # Create production bucket
-   wrangler r2 bucket create ga-data
-
-   # Create preview bucket
-   wrangler r2 bucket create ga-data-preview
+   # Replace BUCKET_NAME with your desired bucket name
+   gcloud storage buckets create gs://BUCKET_NAME
    ```
 
-3. Set Environment Variables (Secrets)
-   ```bash
-   # R2 configuration
-   wrangler secret put R2_BUCKET_NAME
-   wrangler secret put R2_ENDPOINT
-   wrangler secret put R2_ACCESS_KEY_ID
-   wrangler secret put R2_SECRET_ACCESS_KEY
-   ```
+5. Set up billing
+   - Visit Google Cloud Console (https://console.cloud.google.com/billing)
+   - Enable billing for your project
+   - This is required for using Cloud Functions and Cloud Scheduler
 
 ### 2. Deploy Backend
 
 ```bash
 $ cd backend
 $ npm install
-$ npx wrangler deploy
+# TODO: Add Cloud Functions deployment steps
 ```
 
 ### 3. Deploy Frontend
@@ -55,4 +65,8 @@ TODO: Add development environment setup instructions
 
 ## Application Architecture
 
-TODO: Add application architecture diagram 
+TODO: Add application architecture diagram and explain the following components:
+- Cloud Functions (Backend)
+- Cloud Storage (Data storage)
+- Cloud Scheduler (Scheduled tasks)
+- Frontend (React + DuckDB WASM)
