@@ -3,8 +3,12 @@
 ## フェーズ1: GAデータ取得→画面表示
 
 ### バックエンド
-- [x] Wrangler プロジェクトを初期化
-- [x] Cloudflare Workers の環境変数設定（サービスアカウントJSON、GA4プロパティID）
+- [x] ~~Wrangler プロジェクトを初期化~~
+- [x] ~~Cloudflare Workers の環境変数設定~~
+- [ ] Google Cloud プロジェクトのセットアップ
+  - [ ] プロジェクト作成
+  - [ ] サービスアカウント設定
+  - [ ] 必要なAPIの有効化（Cloud Functions, Cloud Storage, etc.）
 - [x] `/api/ga` エンドポイント実装
   - [x] GA4 Data API へのリクエスト (Fetch API)
   - [x] レスポンス(JSON)をそのまま返却
@@ -24,10 +28,12 @@
   - [x] DuckDB-WASM パッケージのインストール
   - [x] 初期化処理の実装
   - [x] メモリ管理の設定
-- [x] バックエンド実装
-  - [x] `/api/ga/parquet-url` エンドポイントの実装
-  - [x] Cloudflare R2の署名付きURL生成処理
-  - [x] 日付範囲に基づくParquetファイルの特定
+- [ ] バックエンド実装
+  - [ ] Cloud Functions プロジェクトの初期化
+  - [ ] `/api/ga/parquet-url` エンドポイントの実装
+  - [ ] DuckDBを使用したParquet変換処理の実装
+  - [ ] Cloud Storageの署名付きURL生成処理
+  - [ ] 日付範囲に基づくParquetファイルの特定
 - [ ] フロントエンド改善
   - [ ] テーブル一覧の表示コンポーネントの実装
   - [ ] テーブル名の重複チェックと管理
@@ -39,12 +45,12 @@
   - [ ] クエリ実行ボタンと結果表示の連携
 
 ### バッチ処理（自動化）
-- [ ] GAデータ自動取得・R2保存バッチ（Cron Worker）
-  - [ ] Scheduled Event Handlerの実装（Cloudflare Workers Cron Trigger）
+- [ ] GAデータ自動取得・Cloud Storage保存バッチ
+  - [ ] Cloud Scheduler（Cron）の設定
+  - [ ] Cloud Functions トリガーの実装
   - [ ] GA4 Data APIから指定日のデータ取得
   - [ ] jsonl.gzまたはParquetへの変換処理
-  - [ ] R2バケットへのアップロード
-  - [ ] スケジュール設定（wrangler.toml/wrangler.jsonc）
+  - [ ] Cloud Storageへのアップロード
 
 ## フェーズ3: 結果表示 & 可視化
 - [ ] テーブル表示 (TanStack Table)
