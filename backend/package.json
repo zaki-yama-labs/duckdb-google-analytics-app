@@ -1,23 +1,28 @@
 {
-	"name": "backend",
-	"version": "0.0.0",
-	"private": true,
+	"name": "duckdb-google-analytics-backend",
+	"version": "0.1.0",
+	"description": "Backend for DuckDB Google Analytics App",
+	"main": "dist/index.js",
 	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"test": "vitest",
-		"cf-typegen": "wrangler types"
-	},
-	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.7.5",
-		"@cloudflare/workers-types": "^4.20250425.0",
-		"typescript": "^5.5.2",
-		"vitest": "~3.0.7",
-		"wrangler": "^4.13.1"
+		"build": "tsc",
+		"start": "functions-framework --target=gaDataFunction",
+		"dev": "concurrently \"tsc --watch\" \"nodemon --watch ./dist/ --exec npm run start\"",
+		"deploy": "gcloud functions deploy ga-data-function --gen2 --runtime=nodejs20 --region=asia-northeast1 --source=. --entry-point=gaDataFunction --trigger-http",
+		"test": "vitest"
 	},
 	"dependencies": {
-		"duckdb": "^1.2.1",
-		"jose": "^6.0.10"
+		"@google-cloud/functions-framework": "^3.3.0",
+		"@google-cloud/storage": "^7.9.0",
+		"duckdb": "^0.10.1"
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.30",
+		"concurrently": "^8.2.2",
+		"nodemon": "^3.1.0",
+		"typescript": "^5.4.2",
+		"vitest": "^1.4.0"
+	},
+	"engines": {
+		"node": ">=20.0.0"
 	}
 }

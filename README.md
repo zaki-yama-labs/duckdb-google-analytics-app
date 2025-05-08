@@ -37,7 +37,23 @@ An application for analyzing Google Analytics 4 data using DuckDB.
    gcloud storage buckets create gs://YOUR_PROJECT_ID-ga-data --location=asia-northeast1
    ```
 
-5. Create and configure service account
+5. Set environment variables
+   ```bash
+   # For local development
+   export BUCKET_NAME=your-project-id-ga-data
+
+   # For Cloud Functions deployment
+   gcloud functions deploy ga-data-function \
+     --gen2 \
+     --runtime=nodejs20 \
+     --region=asia-northeast1 \
+     --source=. \
+     --entry-point=gaDataFunction \
+     --trigger-http \
+     --set-env-vars BUCKET_NAME=your-project-id-ga-data
+   ```
+
+6. Create and configure service account
    ```bash
    # Create service account for Cloud Functions
    gcloud iam service-accounts create ga-data-function --display-name="GA Data Function Service Account"
@@ -52,7 +68,7 @@ An application for analyzing Google Analytics 4 data using DuckDB.
      --role="roles/storage.objectCreator"
    ```
 
-6. Set up billing
+7. Set up billing
    - Visit Google Cloud Console (https://console.cloud.google.com/billing)
    - Enable billing for your project
    - This is required for using Cloud Functions and Cloud Scheduler

@@ -29,7 +29,7 @@
   - [x] 初期化処理の実装
   - [x] メモリ管理の設定
 - [ ] バックエンド実装
-  - [ ] Cloud Functions プロジェクトの初期化
+  - [x] Cloud Functions プロジェクトの初期化
   - [ ] `/api/ga/parquet-url` エンドポイントの実装
   - [ ] DuckDBを使用したParquet変換処理の実装
   - [ ] Cloud Storageの署名付きURL生成処理
