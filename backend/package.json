@@ -17,6 +17,7 @@
 		"wrangler": "^4.13.1"
 	},
 	"dependencies": {
+		"duckdb": "^1.2.1",
 		"jose": "^6.0.10"
 	}
 }
